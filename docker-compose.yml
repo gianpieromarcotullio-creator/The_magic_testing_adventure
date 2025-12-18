@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # Il tuo server LDAP (basato sulla tua immagine custom)
+  ldap-server:
+    image: my-test-ldap  # Usa l'immagine che abbiamo costruito
+    container_name: ldap-galactica
+    ports:
+      - "389:389"
+      - "636:636"
+    environment:
+      # Forza la rimozione dei container vecchi se necessario
+      - LDAP_ORGANISATION=Galactica
+      - LDAP_DOMAIN=galactica.local
+      - LDAP_ADMIN_PASSWORD=admin
+    command: --copy-service  # Necessario per osixia per caricare i file custom al boot
+
+  # L'interfaccia grafica (si connette automaticamente al server sopra)
+  ldap-admin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin-ui
+    ports:
+      - "6443:443"
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap-server # Usa il nome del servizio qui sopra!
+      - PHPLDAPADMIN_HTTPS=false # Semplifica per i test locali
+    depends_on:
+      - ldap-server # Aspetta che il server sia partito

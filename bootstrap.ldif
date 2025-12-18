@@ -1,0 +1,102 @@
+# --- STRUTTURA ORGANIZZATIVA (OUs) ---
+dn: ou=users,dc=galactica,dc=local
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=galactica,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+# --- GRUPPI ---
+# Gruppo 1: Pilots (ex DataScientist - gid 2000)
+dn: cn=Pilots,ou=groups,dc=galactica,dc=local
+objectClass: top
+objectClass: posixGroup
+cn: Pilots
+gidNumber: 2000
+# Membri: starbuck (solo pilota), adama (ingegnere che sa pilotare)
+memberUid: starbuck_pilots
+memberUid: adama_engineers
+
+# Gruppo 2: Medics (ex HR - gid 2001)
+dn: cn=Medics,ou=groups,dc=galactica,dc=local
+objectClass: top
+objectClass: posixGroup
+cn: Medics
+gidNumber: 2001
+memberUid: cottle_medics
+
+# Gruppo 3: Engineers (ex Admin - gid 2002)
+dn: cn=Engineers,ou=groups,dc=galactica,dc=local
+objectClass: top
+objectClass: posixGroup
+cn: Engineers
+gidNumber: 2002
+memberUid: adama_engineers
+memberUid: tyrol_engineers
+
+# --- UTENTI ---
+
+# Utente 1: starbuck_pilots
+dn: uid=starbuck_pilots,ou=users,dc=galactica,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Starbuck Thrace
+sn: Thrace
+uid: starbuck_pilots
+uidNumber: 3000
+gidNumber: 2000
+homeDirectory: /home/starbuck_pilots
+loginShell: /bin/bash
+gecos: Starbuck Pilot
+userPassword: starbuck_pilots_SecretPass!
+mail: starbuck_pilots@galactica.local
+
+# Utente 2: cottle_medics
+dn: uid=cottle_medics,ou=users,dc=galactica,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Doctor Cottle
+sn: Cottle
+uid: cottle_medics
+uidNumber: 3001
+gidNumber: 2001
+homeDirectory: /home/cottle_medics
+loginShell: /bin/bash
+gecos: Doctor Cottle
+userPassword: cottle_medics_SecretPass!
+mail: cottle_medics@galactica.local
+
+# Utente 3: adama_engineers (L'Admin/Ingegnere che è anche nel gruppo Piloti)
+dn: uid=adama_engineers,ou=users,dc=galactica,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Lee Adama
+sn: Adama
+uid: adama_engineers
+uidNumber: 3002
+gidNumber: 2002
+homeDirectory: /home/adama_engineers
+loginShell: /bin/bash
+gecos: Chief Engineer
+userPassword: adama_engineers_SecretPass!
+mail: adama_engineers@galactica.local
+
+# Utente 4: tyrol_engineers (Solo Ingegnere)
+dn: uid=tyrol_engineers,ou=users,dc=galactica,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Galen Tyrol
+sn: Tyrol
+uid: tyrol_engineers
+uidNumber: 3003
+gidNumber: 2002
+homeDirectory: /home/tyrol_engineers
+loginShell: /bin/bash
+gecos: Deck Chief
+userPassword: tyrol_engineers_SecretPass!
+mail: tyrol_engineers@galactica.local
